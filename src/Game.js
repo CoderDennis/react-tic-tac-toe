@@ -11,23 +11,24 @@ function Game() {
 
   const [player, setPlayer] = useState('X');
 
-  // console.log(squares);
-
   return (
-    <g transform="translate(10,50)">
-      {Grid()}
-      {squares.map((value, index) => Square({value, index}, (index) => {
-        const newSquares = squares.slice();
-        newSquares[index] = player;
-        setSquares(newSquares);
+      <svg viewBox="0 0 320 370" preserveAspectRatio="xMidYMid meet">
+        <text x="20" y="35" fontSize="35">Your move, Player {player}</text>
+        <g transform="translate(10,60)">
+          {Grid()}
+          {squares.map((value, index) => Square(value, index, (index) => {
+            const newSquares = squares.slice();
+            newSquares[index] = player;
+            setSquares(newSquares);
 
-        if (player === 'X') {
-          setPlayer('O');
-        } else {
-          setPlayer('X');
-        }
-      }))}
-    </g>
+            if (player === 'X') {
+              setPlayer('O');
+            } else {
+              setPlayer('X');
+            }
+          }))}
+        </g>
+      </svg>
   );
 }
 

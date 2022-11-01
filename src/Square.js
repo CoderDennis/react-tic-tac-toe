@@ -5,7 +5,7 @@ import SquareX from './SquareX';
 import SquareClickable from './SquareClickable';
 import GameSizeContext from './GameSizeContext';
 
-function Square({value, index}, squareClick) {
+function Square(value, index, handleSquareClick) {
   const size = useContext(GameSizeContext);
 
   const row = Math.floor(index / size);
@@ -14,7 +14,7 @@ function Square({value, index}, squareClick) {
   const y = col * 100;
   return (
     <g key={index} transform={`translate(${x},${y})`}>
-      {renderValue(value, () => squareClick(index, squareClick))}
+      {renderValue(value, () => handleSquareClick(index))}
     </g>
   )
 
