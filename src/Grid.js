@@ -1,10 +1,15 @@
-function Grid() {
+function Grid(size) {
+  const lines = Array(size-1).fill().map((_, i) => {
+    const lineOffset = (i+1) * 100;
+    return <g key={i}>
+      <line x1="0" y1={lineOffset} x2={size*100} y2={lineOffset}></line>
+      <line x1={lineOffset} y1="0" x2={lineOffset} y2={size*100}></line>
+    </g>
+  });
+
   return (
     <g strokeWidth="10" stroke="black">
-      <line x1="0" y1="100" x2="300" y2="100"></line>
-      <line x1="0" y1="200" x2="300" y2="200"></line>
-      <line x1="100" y1="0" x2="100" y2="300"></line>
-      <line x1="200" y1="0" x2="200" y2="300"></line>
+      {lines}
     </g>
   );
 }

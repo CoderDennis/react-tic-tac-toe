@@ -1,12 +1,11 @@
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 
 import Grid from './Grid';
-import GameSizeContext from './GameSizeContext';
 import Square from './Square';
 import findWinner from './gameRules';
 
 function Game() {
-  const size = useContext(GameSizeContext);
+  const [size, setSize] = useState(3);
 
   const [squares, setSquares] = useState(Array(size * size).fill());
 
@@ -24,12 +23,14 @@ function Game() {
     }
   }
 
+  const viewBox = `0 0 ${size*100+20} ${size*100+70}`;
+
   return (
-      <svg viewBox="0 0 320 370" preserveAspectRatio="xMidYMid meet">
+      <svg viewBox={viewBox} preserveAspectRatio="xMidYMid meet">
         <text x="20" y="35" fontSize="30">{status}</text>
         <g transform="translate(10,60)">
-          {Grid()}
-          {squares.map((value, index) => Square(value, index, (index) => {
+          {Grid(size)}
+          {squares.map((value, index) => Square(value, index, size, (index) => {
             if (gameWinner) {
               return;
             }
