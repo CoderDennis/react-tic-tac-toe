@@ -4,7 +4,7 @@ import Grid from './Grid';
 import Square from './Square';
 import findWinner from './gameRules';
 
-function Game() {
+function App() {
   const [size, setSize] = useStickyState(3, 'size');
 
   const [squares, setSquares] = useStickyState(Array(size * size).fill(), 'squares');
@@ -23,12 +23,14 @@ function Game() {
     }
   }
 
-  const viewBox = `0 0 ${size*100+20} ${size*100+70}`;
+  const viewBox = `0 0 ${size*100+20} ${size*100+size*15}`;
 
   return (
+    <>
+      <div id="menu">M</div>
       <svg viewBox={viewBox} preserveAspectRatio="xMidYMid meet">
-        <text x="20" y="35" fontSize="30">{status}</text>
-        <g transform="translate(10,60)">
+        <text x="20" y={size*10} fontSize={size*10}>{status}</text>
+        <g transform={`translate(10,${size*15})`}>
           {Grid(size)}
           {squares.map((value, index) => Square(value, index, size, (index) => {
             if (gameWinner) {
@@ -47,9 +49,10 @@ function Game() {
           }))}
         </g>
       </svg>
+    </>
   );
 }
 
-export default Game;
+export default App;
 
 
