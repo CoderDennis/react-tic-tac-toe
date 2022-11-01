@@ -1,15 +1,15 @@
-import { useState } from 'react';
+import useStickyState from './useStickyState';
 
 import Grid from './Grid';
 import Square from './Square';
 import findWinner from './gameRules';
 
 function Game() {
-  const [size, setSize] = useState(3);
+  const [size, setSize] = useStickyState(3, 'size');
 
-  const [squares, setSquares] = useState(Array(size * size).fill());
+  const [squares, setSquares] = useStickyState(Array(size * size).fill(), 'squares');
 
-  const [player, setPlayer] = useState('X');
+  const [player, setPlayer] = useStickyState('X', 'current-player');
 
   const gameWinner = findWinner(squares, size);
 
