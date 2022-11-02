@@ -1,0 +1,14 @@
+#menu {
+  position: fixed;
+  z-index: 100;
+  font-size: 25px;
+  left: 50%;
+  transform: translate(-50%, 0);
+  display: flex;
+}
+
+#menu>* {
+  cursor: pointer;
+  margin-left: 10px;
+  margin-right: 10px;
+}

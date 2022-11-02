@@ -1,8 +1,13 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { solid } from '@fortawesome/fontawesome-svg-core/import.macro';
+
+import './App.css';
 import useStickyState from './useStickyState';
 
 import Grid from './Grid';
 import Square from './Square';
 import findWinner from './gameRules';
+import { useEffect } from 'react';
 
 function App() {
   const [size, setSize] = useStickyState(3, 'size');
@@ -10,6 +15,14 @@ function App() {
   const [squares, setSquares] = useStickyState(Array(size * size).fill(), 'squares');
 
   const [player, setPlayer] = useStickyState('X', 'current-player');
+
+  useEffect(() => {
+    if (squares.length !== size * size) {
+      // reset game if size changed
+      setSquares(Array(size * size).fill());
+      setPlayer('X');
+    }
+  }, [size, squares, setSquares, setPlayer]);
 
   const gameWinner = findWinner(squares, size);
 
@@ -23,13 +36,24 @@ function App() {
     }
   }
 
-  const viewBox = `0 0 ${size*100+20} ${size*100+size*15}`;
+  const reset = () => {
+    setSquares(Array(size * size).fill());
+    setPlayer('X');
+  }
+
+  const viewBox = `0 0 ${size*100+20} ${size*100+size*15+20}`;
+
+  const gridSizes = Array(7).fill().map((_, i) => i+3);
 
   return (
     <>
-      <div id="menu">M</div>
+      <div id="menu">
+        <FontAwesomeIcon icon={solid('rotate')} onClick={reset} />
+        {gridSizes.map(s => <span key={s} onClick={() => setSize(s)}>{s}x{s}</span>)}
+        <span onClick={() => setSize(42)}>42x42</span>
+      </div>
       <svg viewBox={viewBox} preserveAspectRatio="xMidYMid meet">
-        <text x="20" y={size*10} fontSize={size*10}>{status}</text>
+        <text x={size*10} y={size*10} fontSize={size*10}>{status}</text>
         <g transform={`translate(10,${size*15})`}>
           {Grid(size)}
           {squares.map((value, index) => Square(value, index, size, (index) => {
