@@ -40,7 +40,7 @@ function App() {
     }
   }, [size, squares, reset]);
 
-  const viewBox = `0 0 ${size*100+20} ${size*100+size*15+20}`;
+  const viewBox = `0 0 ${size*110} ${size*116}`;
 
   const gridSizes = Array(7).fill().map((_, i) => i+3);
 
@@ -52,8 +52,8 @@ function App() {
         <span onClick={() => setSize(42)}>42x42</span>
       </div>
       <svg viewBox={viewBox} preserveAspectRatio="xMidYMid meet">
-        <text x={size*10} y={size*10} fontSize={size*10}>{status}</text>
-        <g transform={`translate(10,${size*15})`}>
+        <text x={size*10} y={size*12} fontSize={size*10}>{status}</text>
+        <g transform={`translate(${size*5},${size*15})`}>
           {Grid(size)}
           {squares.map((value, index) => Square(value, index, size, (index) => {
             if (gameWinner) {
