@@ -7,7 +7,7 @@ import useStickyState from './useStickyState';
 import Grid from './Grid';
 import Square from './Square';
 import findWinner from './gameRules';
-import { useEffect } from 'react';
+import { useEffect, useCallback } from 'react';
 
 function App() {
   const [size, setSize] = useStickyState(3, 'size');
@@ -15,14 +15,6 @@ function App() {
   const [squares, setSquares] = useStickyState(Array(size * size).fill(), 'squares');
 
   const [player, setPlayer] = useStickyState('X', 'current-player');
-
-  useEffect(() => {
-    if (squares.length !== size * size) {
-      // reset game if size changed
-      setSquares(Array(size * size).fill());
-      setPlayer('X');
-    }
-  }, [size, squares, setSquares, setPlayer]);
 
   const gameWinner = findWinner(squares, size);
 
@@ -36,10 +28,17 @@ function App() {
     }
   }
 
-  const reset = () => {
+  const reset = useCallback(() => {
     setSquares(Array(size * size).fill());
     setPlayer('X');
-  }
+  }, [size, setSquares, setPlayer])
+
+  useEffect(() => {
+    if (squares.length !== size * size) {
+      // reset game when size changed
+      reset();
+    }
+  }, [size, squares, reset]);
 
   const viewBox = `0 0 ${size*100+20} ${size*100+size*15+20}`;
 
