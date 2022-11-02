@@ -13,7 +13,7 @@
   margin-right: 5px;
 }
 
-@media (orientation: portrait) {
+@media (orientation: portrait) or ((min-width: 901px) and (min-height: 801px)) {
   #menu {
     left: 50%;
     transform: translate(-50%, 0);
@@ -26,7 +26,7 @@
   }
 }
 
-@media (orientation: landscape) {
+@media (orientation: landscape) and ((max-width: 900px) or (max-height: 800px)) {
   #menu {
     flex-direction: column;
   }
