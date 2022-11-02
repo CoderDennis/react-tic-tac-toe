@@ -43,13 +43,13 @@ function App() {
   const viewBox = `0 0 ${size*110} ${size*116}`;
 
   const gridSizes = Array(7).fill().map((_, i) => i+3);
+  gridSizes.push(42); // to demonstrate there's no real limit to grid size ;)
 
   return (
     <>
       <div id="menu">
         <FontAwesomeIcon icon={solid('rotate')} onClick={reset} />
-        {gridSizes.map(s => <span key={s} onClick={() => setSize(s)}>{s}x{s}</span>)}
-        <span onClick={() => setSize(42)}>42x42</span>
+        {gridSizes.map(s => <span className={size === s ? "selected" : ""} key={s} onClick={() => setSize(s)}>{s}x{s}</span>)}
       </div>
       <svg viewBox={viewBox} preserveAspectRatio="xMidYMid meet">
         <text x={size*10} y={size*12} fontSize={size*10}>{status}</text>
